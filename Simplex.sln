@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplex", "Simplex\Simplex.csproj", "{EA687843-B377-4EA5-8DF9-5DC3C50CE8C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplex.Console", "Simplex.Console\Simplex.Console.csproj", "{EA687843-B377-4EA5-8DF9-5DC3C50CE8C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplex.BusinessLogic", "Simplex.BusinessLogic\Simplex.BusinessLogic.csproj", "{D0A7CDE6-F792-447E-A403-39BAE9AFB752}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EA687843-B377-4EA5-8DF9-5DC3C50CE8C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA687843-B377-4EA5-8DF9-5DC3C50CE8C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA687843-B377-4EA5-8DF9-5DC3C50CE8C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0A7CDE6-F792-447E-A403-39BAE9AFB752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0A7CDE6-F792-447E-A403-39BAE9AFB752}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0A7CDE6-F792-447E-A403-39BAE9AFB752}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0A7CDE6-F792-447E-A403-39BAE9AFB752}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
