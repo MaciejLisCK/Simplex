@@ -10,6 +10,12 @@ namespace Simplex.BusinessLogic
 {
     public class SimplexTableau
     {
+        public LinearProgramType ProblemType { get; set; }
+        public string[] Xj { get { return XjCj.Keys.ToArray(); } }
+        public string[] Xi { get { return XiCi.Keys.ToArray(); } }
+        public float[] Cj { get { return XjCj.Values.ToArray(); } }
+        public float[] Ci { get { return XiCi.Values.ToArray(); } }
+
         public Dictionary<string, float> XjCj { get; set; }
         public Dictionary<string, float> XiCi { get; set; }
         public Dictionary<Tuple<string,string>, float> A { get; set; }
@@ -18,11 +24,14 @@ namespace Simplex.BusinessLogic
         public Dictionary<string, float> Cj_Zj { get; set; }
         public Dictionary<string, float> Bi_Aik { get; set; }
 
+
         LinearProgramCanonical _linearProgramCanonical;
 
 
         public SimplexTableau(SimplexTableau previousTableau)
         {
+            ProblemType = previousTableau.ProblemType;
+
             XjCj = new Dictionary<string, float>();
             XiCi = new Dictionary<string, float>();
 
@@ -65,12 +74,28 @@ namespace Simplex.BusinessLogic
                     var currentAijCoordinates = new Tuple<string, string>(xi, xj);
                     var currentAijValue = previousAij - (previousLeavingAiValue * currentEnteredAijValue);
                     A.Add(currentAijCoordinates, currentAijValue);
-
-
                 }
             }
+        
+            //Bi
+            foreach (var xi in remainingXi)
+            {
+                var previousBi = previousTableau.Bi[xi];
 
+                var previousLeavingBiValue = previousTableau.Bi[previousTableau.LeavingVariable];
+
+                var currentEnteredAijCoordinates = new Tuple<string, string>(xi, previousTableau.EnteringVariable);
+                var currentEnteredAijValue = previousTableau.A[currentEnteredAijCoordinates];
+
+                var currentBiValue = previousBi - (previousLeavingBiValue * currentEnteredAijValue);
+                Bi.Add(xi, currentBiValue);
+            }
+
+            FillZj();
+            FillCj_Zj();
+            FillBi_Aik(EnteringVariable);
         }
+
 
 
         public SimplexTableau(LinearProgramCanonical linearProgramCanonical)
@@ -79,6 +104,7 @@ namespace Simplex.BusinessLogic
             XiCi = new Dictionary<string, float>();
 
             _linearProgramCanonical = linearProgramCanonical;
+            ProblemType = _linearProgramCanonical.Type;
 
             foreach (var objectiveSymbol in _linearProgramCanonical.Objective.Symbols)
             {
@@ -117,14 +143,14 @@ namespace Simplex.BusinessLogic
         {
             get
             {
-                if (_linearProgramCanonical.Type == LinearProgramType.Minimalization)
+                if (ProblemType == LinearProgramType.Minimalization)
                 {
                     var lowestCj_Zj = Cj_Zj.OrderBy(cj_xj => cj_xj.Value).First().Key;
 
                     return lowestCj_Zj;
                 }
 
-                if (_linearProgramCanonical.Type == LinearProgramType.Maximization)
+                if (ProblemType == LinearProgramType.Maximization)
                 {
                     var highestCj_Zj = Cj_Zj.OrderBy(cj_xj => cj_xj.Value).Last().Key;
 

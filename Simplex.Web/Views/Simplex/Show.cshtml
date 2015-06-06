@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Simplex.BusinessLogic.SimplexTableau>
+
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Show</h2>
+
+
+@foreach (var table in Model)
+{
+    <table class="table table-bordered">
+        <tr>
+            <td class="active">Ci\Cj</td>
+            <td class="active"></td>
+            @foreach (var cj in table.Cj)
+            {
+                <td class="success">@cj</td>
+            }
+            <td class="active" rowspan="2">Bi</td>
+            <td class="active" rowspan="2">Bi/Aik</td>
+        </tr>
+        <tr>
+            <td class="active"></td>
+            <td class="active">Xi\Xj</td>
+            @foreach (var xj in table.Xj)
+            {
+                <td class="active">@xj</td>
+            }
+        </tr>
+        @foreach (var xici in table.XiCi)
+	    {
+            <tr>
+                <td class="success">@xici.Value</td>
+                <td class="active">@xici.Key</td>
+                @foreach (var aij in table.A.Where(a => a.Key.Item1 == xici.Key).Select(aij => aij.Value))
+                {
+                    <td class="danger">@aij</td>
+                }
+                <td class="success">@table.Bi[xici.Key]</td>
+                <td class="success">@table.Bi_Aik[xici.Key]</td>
+            </tr>            
+	    }
+        <tr>
+            <td class="active" colspan="2">Zj</td>
+            @foreach (var xj in table.Xj)
+            {
+                <td class="success">@table.Zj[xj]</td>
+            }
+            <td class="active" colspan="2" rowspan="2">z(x)</td>
+        </tr>
+        <tr>
+            <td class="active" colspan="2">Cj-Zj</td>
+            @foreach (var xj in table.Xj)
+            {
+                <td class="success">@table.Cj_Zj[xj]</td>
+            }
+        </tr>
+    </table>    
+}
+
