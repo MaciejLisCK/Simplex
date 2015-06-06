@@ -60,9 +60,9 @@ namespace Simplex.BusinessLogic
                     clonedObjective.Symbols.Add(newSymbolName, 0);
 
                     if (linearProgram.Type == LinearProgramType.Minimalization)
-                        clonedObjective.Symbols.Add(newIdentitySymbolName, (Single.MaxValue / 2));
+                        clonedObjective.Symbols.Add(newIdentitySymbolName, (Single.MaxValue / 1000));
                     if (linearProgram.Type == LinearProgramType.Maximization)
-                        clonedObjective.Symbols.Add(newIdentitySymbolName, -(Single.MaxValue / 2));
+                        clonedObjective.Symbols.Add(newIdentitySymbolName, -(Single.MaxValue / 1000));
                 }
                 else
                 {
