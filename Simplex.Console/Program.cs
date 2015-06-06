@@ -41,7 +41,8 @@ namespace Simplex
             var canonical = linearProgramToCanonicalConverter.Convert(linearProgram);
 
 
-            var simplexTableau = new SimplexTableau(canonical);
+            var firstSimplexTableau = new SimplexTableau(canonical);
+            var secondSimplexTableau = new SimplexTableau(firstSimplexTableau);
         }
     }
 }
