@@ -34,19 +34,14 @@ namespace Simplex
             limitation3.Type = RelationType.GreaterOrEqual;
             limitation3.RightExpression.Symbols.Add("", 0);
             var limitation4 = new Relation();
-            limitation4.LeftExpression.Symbols.Add("x1", 1);
-            limitation4.Type = RelationType.GreaterOrEqual;
-            limitation4.RightExpression.Symbols.Add("", 0);
-            var limitation5 = new Relation();
-            limitation5.LeftExpression.Symbols.Add("x2", 1);
-            limitation5.Type = RelationType.GreaterOrEqual;
-            limitation5.RightExpression.Symbols.Add("", 0);
-            linearProgram.Limitations.AddRange(new Relation[] { limitation1, limitation2, limitation3, limitation4, limitation5 });
+            linearProgram.Limitations.AddRange(new Relation[] { limitation1, limitation2, limitation3 });
 
-            
+            var linearProgramToCanonicalConverter = new LinearProgramToCanonicalConverter();
+
+            var canonical = linearProgramToCanonicalConverter.Convert(linearProgram);
 
 
-
+            var simplexTableau = new SimplexTableau(canonical);
         }
     }
 }
